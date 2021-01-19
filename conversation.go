@@ -13,16 +13,122 @@ type ConversationList struct {
 
 // A Conversation represents a conversation between users and admins in Intercom.
 type Conversation struct {
-	ID                  string               `json:"id"`
-	CreatedAt           int64                `json:"created_at"`
-	UpdatedAt           int64                `json:"updated_at"`
-	User                User                 `json:"user"`
-	Assignee            Admin                `json:"assignee"`
-	Open                bool                 `json:"open"`
-	Read                bool                 `json:"read"`
-	ConversationMessage ConversationMessage  `json:"conversation_message"`
-	ConversationParts   ConversationPartList `json:"conversation_parts"`
-	TagList             *TagList             `json:"tags"`
+	Type               string                  `json:"type"`
+	ID                 string                  `json:"id"`
+	CreatedAt          int64                   `json:"created_at"`
+	UpdatedAt          int64                   `json:"updated_at"`
+	WaitingSince       int64                   `json:"waiting_since"`
+	SnoozedUntil       int64                   `json:"snoozed_until"`
+	Source             Source                  `json:source""`
+	Contacts           ConversationContactList `json:"contacts"`
+	FirstContactReply  FirstContactReply       `json:"first_contact_reply"`
+	AdminAssigneeID    int64                   `json:"admin_assignee_id"`
+	TeamAssigneeID     string                  `json:"team_assignee_id"`
+	Open               bool                    `json:"open"`
+	Read               bool                    `json:"read"`
+	Tags               ConversationTagList     `json:"tags"`
+	Priority           string                  `json:"priority"`
+	SLAApplied         SLAApplied              `json:"sla_applied"`
+	Statistics         ConversationStatistics  `json:"statistics"`
+	ConversationRating ConversationRating      `json:"conversation_rating"`
+	Teammates          ConversationTeammate    `json:"teammates"`
+	Title              string                  `json:"title"`
+	CustomAttributes   map[string]interface{}  `json:"custom_attributes"`
+}
+
+// SourceAuthor ...
+type SourceAuthor struct {
+	Type string `json:"type"`
+	ID   string `json:"id"`
+}
+
+// Source ...
+type Source struct {
+	Type        string       `json:"type"`
+	ID          string       `json:"id"`
+	DeliveredAs string       `json:"delivered_as"`
+	Subject     string       `json:"subject"`
+	Body        string       `json:"body"`
+	Author      SourceAuthor `json:"author"`
+	// Attachments map[string]interface{} `json:"attachments"`
+	URL string `json:"url"`
+}
+
+// ConversationContactObj ...
+type ConversationContactObj struct {
+	Type string `json:"type"`
+	ID   string `json:"id"`
+}
+
+// ConversationContactList ...
+type ConversationContactList struct {
+	Type     string                   `json:"type"`
+	Contacts []ConversationContactObj `json:"contacts"`
+}
+
+// ConversationTagObj ...
+type ConversationTagObj struct {
+	Type string `json:"type"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+// ConversationTagList ...
+type ConversationTagList struct {
+	Type string               `json:"type"`
+	Tags []ConversationTagObj `json:"tags"`
+}
+
+// FirstContactReply ...
+type FirstContactReply struct {
+	Type      string `json:"type"`
+	URL       string `json:"url"`
+	CreatedAt int64  `json:"created_at"`
+}
+
+// SLAApplied ...
+type SLAApplied struct {
+	SLAName   string `json:"sla_name"`
+	SLAStatus string `json:"sla_status"`
+}
+
+// ConversationStatistics ...
+type ConversationStatistics struct {
+	TimeToAssignment           int64                  `json:"time_to_assignment"`
+	TimeToAdminReply           int64                  `json:"time_to_admin_reply"`
+	TimeToFirstClose           int64                  `json:"time_to_first_close"`
+	TimeToLastClose            int64                  `json:"time_to_last_close"`
+	MedianTimeToReply          int64                  `json:"median_time_to_reply"`
+	FirstContactReplyAt        int64                  `json:"first_contact_reply_at"`
+	FirstAssignmentAt          int64                  `json:"first_assignment_at"`
+	FirstAdminReplyAt          int64                  `json:"first_admin_reply_at"`
+	FirstCloseAt               int64                  `json:"first_close_at"`
+	LastAssignmentAt           int64                  `json:"last_assignment_at"`
+	LastAssignmentAdminReplyAt int64                  `json:"last_assignment_admin_reply_at"`
+	LastContactReplyAt         int64                  `json:"last_contact_reply_at"`
+	LastAdminReplyAt           int64                  `json:"last_admin_reply_at"`
+	LastCloseAt                int64                  `json:"last_close_at"`
+	LastClosedBy               map[string]interface{} `json:"last_closed_by"`
+	CountReopens               int64                  `json:"count_reopens"`
+	CountAssignments           int64                  `json:"count_assignments"`
+	CountConversationsParts    int64                  `json:"count_conversations_parts"`
+}
+
+// ConversationRating ...
+type ConversationRating struct {
+	Rating    int32                  `json:"rating"`
+	Remark    string                 `json:"remark"`
+	CreatedAt int64                  `json:"created_at"`
+	Contact   map[string]interface{} `json:"contact"`
+	Teammate  map[string]interface{} `json:"teammate"`
+}
+
+// ConversationTeammate ...
+type ConversationTeammate struct {
+	Type  string `json:"type"`
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 // A ConversationMessage is the message that started the conversation rendered for presentation
