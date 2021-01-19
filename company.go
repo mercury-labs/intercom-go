@@ -10,8 +10,8 @@ type CompanyService struct {
 // CompanyList holds a list of Companies and paging information
 type CompanyList struct {
 	Pages       PageParams
-	Companies   []Company
-	ScrollParam string `json:"scroll_param,omitempty"`
+	Companies   []Company `json:"data,omitempty"`
+	ScrollParam string    `json:"scroll_param,omitempty"`
 }
 
 // Company represents a Company in Intercom
