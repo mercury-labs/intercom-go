@@ -9,6 +9,7 @@ type SegmentService struct {
 
 // Segment represents an Segment in Intercom.
 type Segment struct {
+	Type       string `json:"type,omitempty"`
 	ID         string `json:"id,omitempty"`
 	Name       string `json:"name,omitempty"`
 	CreatedAt  int64  `json:"created_at,omitempty"`
@@ -18,6 +19,7 @@ type Segment struct {
 
 // SegmentList, an object holding a list of Segments
 type SegmentList struct {
+	Type     string    `json:"type,omitempty"`
 	Segments []Segment `json:"segments,omitempty"`
 }
 
@@ -32,5 +34,5 @@ func (t *SegmentService) Find(id string) (Segment, error) {
 }
 
 func (s Segment) String() string {
-	return fmt.Sprintf("[intercom] segment { id: %s, type: %s }", s.ID, s.PersonType)
+	return fmt.Sprintf("[intercom] segment { type: %s, id: %s, name: %s, created_at: %d, updated_at: %d, person_type: %s }", s.Type, s.ID, s.Name, s.CreatedAt, s.UpdatedAt, s.PersonType)
 }
