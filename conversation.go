@@ -1,5 +1,7 @@
 package intercom
 
+import "fmt"
+
 // ConversationService handles interactions with the API through an ConversationRepository.
 type ConversationService struct {
 	Repository ConversationRepository
@@ -277,4 +279,8 @@ type ConversationListParams struct {
 	Open           *bool  `url:"open,omitempty"`
 	Unread         *bool  `url:"unread,omitempty"`
 	DisplayAs      string `url:"display_as,omitempty"`
+}
+
+func (c Conversation) String() string {
+	return fmt.Sprintf("[intercom] conversation { id: %s created_at: %d ... }", c.ID, c.CreatedAt)
 }
